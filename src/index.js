@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander';
+import { fetchWeatherData } from './FetchApi.js';
+import { forecastSummary } from './Charts/index.js';
+import { generateHourlyChart } from './Charts/useChart.js';
+const program  = new Command();
+
+
+program.name("Weather_CLI").description("CLI Tool to get the Weather Data.").version("1.0.0")
+
+
+program
+.command('current')
+.description('Get temperature in Celcius')
+.argument("<City>", "Name of the city")
+.option("-f, --fahrenheit", "Fetch temperature in Fahrenheit")
+.action(async(CityName, options) => {
+    let unit = 'c';
+    if(options.fahrenheit){
+        unit = 'f';
+    }
+    let result = await fetchWeatherData(`https://api.weatherapi.com/v1/current.json`, CityName, unit);
+    console.log(`The Temperature at Pune is ${unit=='c'?result.current.temp_c: result.current.temp_f} ${unit=='c'?"°C": "°F"}`);
+})
+
+program
+.command("chart")
+.description("Visualize the Weather Forecast")
+.argument("<City>", "Name of the city.")
+.option("-s, --forecastSummary", "Summary of your forecast")
+.option("-f, --Fahrenheit", "Summary in terms of Fahrenheit")
+.option("-T, --hourlyForecast", "Hourly Forecast of the day")
+.action(async(CityName, options) => {
+    let unit = 'c';
+    if(options.Fahrenheit){
+        unit = 'f';
+    }
+
+    let weatherForecast = await fetchWeatherData(`https://api.weatherapi.com/v1/forecast.json`, CityName, unit);
+    if(options.forecastSummary){
+        forecastSummary(weatherForecast, unit);
+    }
+
+    if(options.hourlyForecast){
+        generateHourlyChart(weatherForecast, unit);
+    }
+})
+
+program.parse()
