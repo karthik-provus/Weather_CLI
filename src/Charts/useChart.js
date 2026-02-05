@@ -9,6 +9,13 @@ const hours = [
 
 export const generateHourlyChart = async(weatherData, unit) => {
     let hourlyData = weatherData.forecast.forecastday[0].hour
-    let temp = hourlyData.map((obj) => obj.temp_c)
-    await generateForecastChart(hours, temp)
+
+    let temp;
+    if(temp=='c'){
+        temp = hourlyData.map((obj) => obj.temp_c);
+    }
+    else{
+        temp = hourlyData.map((obj) => obj.temp_f);
+    }
+    await generateForecastChart(hours, temp, unit)
 }

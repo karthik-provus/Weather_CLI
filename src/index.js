@@ -4,12 +4,13 @@ import { Command } from 'commander';
 import { fetchWeatherData } from './FetchApi.js';
 import { forecastSummary } from './Charts/index.js';
 import { generateHourlyChart } from './Charts/useChart.js';
+import dotenv from 'dotenv';
+dotenv.config({quiet:true}); // quiet true silents the logs
 const program  = new Command();
 
+const weather_api = process.env.WEATHER_API;
 
 program.name("Weather_CLI").description("CLI Tool to get the Weather Data.").version("1.0.0")
-
-
 program
 .command('current')
 .description('Get temperature in Celcius')
@@ -20,7 +21,7 @@ program
     if(options.fahrenheit){
         unit = 'f';
     }
-    let result = await fetchWeatherData(`https://api.weatherapi.com/v1/current.json`, CityName, unit);
+    let result = await fetchWeatherData(`${weather_api}/current.json`, CityName, unit);
     console.log(`The Temperature at Pune is ${unit=='c'?result.current.temp_c: result.current.temp_f} ${unit=='c'?"°C": "°F"}`);
 })
 
@@ -37,7 +38,7 @@ program
         unit = 'f';
     }
 
-    let weatherForecast = await fetchWeatherData(`https://api.weatherapi.com/v1/forecast.json`, CityName, unit);
+    let weatherForecast = await fetchWeatherData(`${weather_api}/forecast.json`, CityName, unit);
     if(options.forecastSummary){
         forecastSummary(weatherForecast, unit);
     }

@@ -12,7 +12,7 @@ export async function generateForecastChart(days, temps, unit = "°C") {
       labels: days,
       datasets: [
         {
-          label: `Temperature Forecast (${unit})`,
+          label: `Temperature Forecast (${unit=='c'?"°C":"°F"})`,
           data: temps,
           borderColor: "rgba(75, 192, 192, 1)",
           backgroundColor: "rgba(75, 192, 192, 0.2)",
