@@ -6,7 +6,18 @@ import { forecastSummary } from './Charts/index.js';
 import { generateHourlyChart } from './Charts/useChart.js';
 import dotenv from 'dotenv';
 import { withErrorHandling } from './Utility/ErrorHandling.js';
-dotenv.config({quiet:true}); // quiet true silents the logs
+// dotenv.config({quiet:true}); // quiet true silents the logs
+
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// import.meta.url == file:///C:/users...weatherCli/src/index.js
+const __filename = fileURLToPath(import.meta.url); // file:///C:/users... --> C:/Users...weatherCli/src/index.js
+const __dirname = dirname(__filename); // remove index.js
+
+// Point dotenv to the .env file explicitly
+dotenv.config({ path: join(__dirname, '../.env'), quiet:true });
+
 const program  = new Command();
 
 const weather_api = process.env.WEATHER_API;
@@ -44,7 +55,7 @@ program
 
     }
     else{
-        console.log(`\nThe Temperature at ${CityName} is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
+        console.log(`\nThe Temperature at ${CityName} is ${unit=='c'?result2.current.temp_c: result2.current.temp_f} °${unit.toUpperCase()}`);
     }
 }))
 
@@ -73,4 +84,4 @@ program
     }
 }))
 
-program.parse()
+program.parse(process.argv)

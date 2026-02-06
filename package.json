@@ -20,6 +20,6 @@
     "ora": "^9.3.0"
   },
   "bin": {
-    "mycli": "src/index.js"
+    "weather": "./src/index.js"
   }
 }
