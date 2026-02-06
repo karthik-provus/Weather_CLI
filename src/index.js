@@ -30,7 +30,8 @@ program
     let result2 = await fetchWeatherData(`${weather_api}/forecast.json`, CityName, unit);
     if(options.detailed){
         let currTemp = result2.current;
-        console.log(`City Name: ${CityName}`)
+        
+        console.log(`\nCity Name: ${CityName}`)
         console.log(`Temperature: ${unit=='c'?currTemp.temp_c: currTemp.temp_f} °${unit.toUpperCase()}`)
         console.log(`Today the weather Condition is: ${currTemp.condition.text}`)
         console.log(`Feels like ${unit=='c'?currTemp.feelslike_c: currTemp.feelslike_f} °${unit.toUpperCase()}`)
@@ -43,7 +44,7 @@ program
 
     }
     else{
-        console.log(`The Temperature at ${CityName} is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
+        console.log(`\nThe Temperature at ${CityName} is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
     }
 }))
 
