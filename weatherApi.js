@@ -1153,5 +1153,6 @@ export const weatherAPI = {
 }
 
 
-console.log(weatherAPI.forecast.forecastday[0].day.maxtemp_c)
+// console.log(weatherAPI.forecast.forecastday[0].day.maxtemp_c)
+console.log('\\');
 

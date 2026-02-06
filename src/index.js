@@ -43,11 +43,9 @@ program
 
     }
     else{
-        
         console.log(`The Temperature at ${CityName} is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
     }
 }))
-
 
 // chart command
 program
