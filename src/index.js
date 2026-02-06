@@ -26,7 +26,7 @@ program
         unit = 'f';
     }
     let result = await fetchWeatherData(`${weather_api}/current.json`, CityName, unit);
-    console.log(`The Temperature at Pune is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
+    console.log(`The Temperature at ${CityName} is ${unit=='c'?result.current.temp_c: result.current.temp_f} °${unit.toUpperCase()}`);
 }))
 
 
